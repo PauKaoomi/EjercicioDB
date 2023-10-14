@@ -1,0 +1,110 @@
+
+test> use ejercicioDB
+switched to db ejercicioDB
+ejercicioDB> show collections
+
+ejercicioDB> db.createCollection("personas",{})
+ejercicioDB> db.personas.insertMany ([{"nombre":"Juan Perez", "edad":30, "ciudad":"Nueva York"},{"nombre":"Maria Gonzalez", "edad":25, "ciudad":"Los Angeles"},{"nombre":"Carlos Ramirez","edad":28,"ciudad":"Nueva York"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("6528a1363379c4eb8826850c"),
+    '1': ObjectId("6528a1363379c4eb8826850d"),
+    '2': ObjectId("6528a1363379c4eb8826850e")
+  }
+}
+ejercicioDB> db.personas.find({})
+[
+  {
+    _id: ObjectId("6528a1363379c4eb8826850c"),
+    nombre: 'Juan Perez',
+    edad: 30,
+    ciudad: 'Nueva York'
+  },
+  {
+    _id: ObjectId("6528a1363379c4eb8826850d"),
+    nombre: 'Maria Gonzalez',
+    edad: 25,
+    ciudad: 'Los Angeles'
+  },
+  {
+    _id: ObjectId("6528a1363379c4eb8826850e"),
+    nombre: 'Carlos Ramirez',
+    edad: 28,
+    ciudad: 'Nueva York'
+  }
+]
+ejercicioDB> db.personas.find({edad:{$gt:25}})
+[
+  {
+    _id: ObjectId("6528a1363379c4eb8826850c"),
+    nombre: 'Juan Perez',
+    edad: 30,
+    ciudad: 'Nueva York'
+  },
+  {
+    _id: ObjectId("6528a1363379c4eb8826850e"),
+    nombre: 'Carlos Ramirez',
+    edad: 28,
+    ciudad: 'Nueva York'
+  }
+]
+
+ejercicioDB> db.personas.updateOne({_id: ObjectId("6528a1363379c4eb8826850c")},{$set:{nombre:"Juan Perez",edad:31,ciudad:"Nueva York"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+ejercicioDB> db.personas.find({})
+[
+  {
+    _id: ObjectId("6528a1363379c4eb8826850c"),
+    nombre: 'Juan Perez',
+    edad: 31,
+    ciudad: 'Nueva York'
+  },
+  {
+    _id: ObjectId("6528a1363379c4eb8826850d"),
+    nombre: 'Maria Gonzalez',
+    edad: 25,
+    ciudad: 'Los Angeles'
+  },
+  {
+    _id: ObjectId("6528a1363379c4eb8826850e"),
+    nombre: 'Carlos Ramirez',
+    edad: 28,
+    ciudad: 'Nueva York'
+  }
+]
+ejercicioDB> db.personas.updateMany ({edad:{$gt:25,$lt:31}, ciudad:{$eq:"Nueva York"}},{$set:{ciudad:"Los Angeles"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+ejercicioDB> db.personas.find({})
+[
+  {
+    _id: ObjectId("6528a1363379c4eb8826850c"),
+    nombre: 'Juan Perez',
+    edad: 31,
+    ciudad: 'Nueva York'
+  },
+  {
+    _id: ObjectId("6528a1363379c4eb8826850d"),
+    nombre: 'Maria Gonzalez',
+    edad: 25,
+    ciudad: 'Los Angeles'
+  },
+  {
+    _id: ObjectId("6528a1363379c4eb8826850e"),
+    nombre: 'Carlos Ramirez',
+    edad: 28,
+    ciudad: 'Los Angeles'
+  }
+]
